@@ -54,7 +54,7 @@ class PriestPlanner:
         min_velocity=0.0,
         max_acceleration=1.0,
         max_inner_iterations=13,
-        max_outer_iterations=12,
+        max_outer_iterations=20,
         tracking_weight=0.1,
         smoothness_weight=0.2,
         static_obstacle_semi_minor_axis=0.5,

@@ -50,7 +50,7 @@ class PurePursuit:
     # Constructor
     def __init__(self):
         # initialize parameters
-        self.lookahead = 2  # rospy.get_param('~lookahead', 5.0)
+        self.lookahead = 3.5  # rospy.get_param('~lookahead', 5.0)
         self.rate = rospy.get_param("~rate", 20.0)
         self.goal_margin = 0.9  # rospy.get_param('~goal_margin', 3.0)
 

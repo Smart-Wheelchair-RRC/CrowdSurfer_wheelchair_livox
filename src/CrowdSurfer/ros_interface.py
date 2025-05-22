@@ -41,6 +41,8 @@ np.float = np.float64
 
 from ros_numpy.point_cloud2 import pointcloud2_to_xyz_array
 
+from logger import PerformanceLogger
+
 pause_physics_service = None
 unpause_physics_service = None
 
@@ -66,6 +68,10 @@ class PlanningData:
 
 class ROSInterface:
     def __init__(self, configuration: Configuration):
+        
+        self.logger = PerformanceLogger()
+        self.logger.start_logging()
+
         self.pipeline = LivePipeline(configuration)
         self.total_rollout_time = 0
         self.num_rollouts = 0
@@ -187,12 +193,6 @@ class ROSInterface:
         if np.linalg.norm(self.planning_data.goal) <= threshold_distance:
             self.received_goal = False
             self.goal_reached_publisher.publish()
-            if self.num_rollouts != 0:
-                print("Reached Goal")
-                print(
-                    "Average Rollout Time: ",
-                    self.total_rollout_time / self.num_rollouts,
-                )
             self.total_rollout_time = 0
             self.num_rollouts = 0
             return True
@@ -309,9 +309,9 @@ class ROSInterface:
                 tf.ConnectivityException,
                 tf.ExtrapolationException,
             ):
-                print(
-                    f"Lookup failed between {frame} and {self.robot_base_frame} for dynamic obstacle velocity transformation"
-                )
+                #print(
+                #    f"Lookup failed between {frame} and {self.robot_base_frame} for dynamic obstacle velocity transformation"
+                #)
                 return []
 
             rot = quaternion_matrix(np.array(rot))
@@ -476,7 +476,7 @@ class ROSInterface:
             cmd_vel.linear.x = v_t_control
             cmd_vel.angular.z = omega_control
 
-            print("Control", v_t_control, omega_control)
+            #print("Control", v_t_control, omega_control)
             self.velocity_publisher.publish(cmd_vel)
         else:
             self.publish_zero_velocity()

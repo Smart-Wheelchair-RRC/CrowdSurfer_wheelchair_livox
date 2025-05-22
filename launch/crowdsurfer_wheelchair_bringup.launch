@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch Kangaroo Motor Driver -->
+  <group ns="kangaroo_driver">
+    <param name="motor_driver_param" value="value" />
+    <node pkg="kangaroo_driver" type="kangaroo_driver_node" name="kangaroo_driver" output="screen" />
+  </group>
+
+  <!-- Launch 3D Lidar -->
+  <group ns="wheelchair_laser">
+    <include file="$(find wheelchair_laser)/launch/livox_launch/wheelchair_msg_MID360.launch" />
+  </group>
+
+  <!-- Launch Realsense Camera -->
+  <group ns="realsense2_camera">
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch" />
+  </group>
+
+  <!-- Launch Wheelchair FastLIO -->
+  <group ns="wheelchair_nav">
+    <include file="$(find crowdsurfer_ros)/launch/wheelchair_nav_fastlio.launch" />
+  </group>
+
+  <!-- Launch LV-DOT -->
+  <!-- <group ns="onboard_detector">
+    <include file=""
+  </group> -->
+
+  <!-- Launch ROS Interface
+  <group ns="ros_interface">
+    <param name="interface_param" value="value" />
+    <node pkg="crowdsurfer_ros" type="ros_interface.py" name="CrowdSurfer" output="screen" />
+  </group> -->
+</launch>
